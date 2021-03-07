@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Amicable Numbers</title>
+<script language="javascript">
+	window.onload =function(){
+		b = document.getElementById ("btn");
+		b.onclick = function(){
+			x = parseInt(document.getElementById("input1").value);
+			y = parseInt(document.getElementById("input2").value);
+			display(x, y);
+		}
+	}
+	
+	//display result, calls checkAmic and alertFactors
+	function display(x, y){
+		factors_x = new Array(0);
+		factors_y = new Array(0);
+		if (checkAmic(x, y, factors_x, factors_y))
+			document.getElementById("result").innerHTML="The numbers: " + x + " and " + y + " are amicable.";
+		else
+			document.getElementById("result").innerHTML="The numbers: " + x + " and " + y + " are not amicable.";
+		
+		alertFactors(x, factors_x);
+		alertFactors(y, factors_y);
+	}
+	
+	//check whether two numbers are amicable numbers, stores factors into separate arrays
+	function checkAmic(x, y, factors_x, factors_y){
+		//alert("in checkAmic");
+		fsum_x=0, fsum_y=0;
+		for (i=1; i<x; i++){
+			if (isAFactor(i,x)){
+				fsum_x+=i;
+				factors_x.push(i);
+				//alert("yes");
+			}
+		}
+		for (i=1; i<y; i++){
+			if (isAFactor(i,y)){
+				fsum_y+=i;
+				factors_y.push(i);
+				//alert("yes");
+			}
+		}
+
+		if (fsum_x==y && fsum_y==x)
+			return true;
+		else 
+			return false;
+	}
+	
+	//popup displaying factors for diagnosis
+	function alertFactors(x, factor_arr){
+		//alert("in alertFactors");
+		var factors="";
+		for (i=0; i<factor_arr.length;i++){
+			if (i== factor_arr.length - 1)
+				factors += factor_arr[i];
+			else
+				factors += factor_arr[i] + ", ";
+		}
+		alert(x + ": [" + factors + "]");
+	}
+	
+	//helper function to determine whether a factor
+	function isAFactor(x,y){
+		//alert("in isAFactor");
+		if (y % x == 0) 
+			return true;
+		else
+			return false;
+	}
+	
+	
+</script>
+</head>
+
+<body>
+	<form>
+	<div>Input 1: 
+		<input type="text" id="input1">
+	</div>
+	<div>Input 2: 
+		<input type="text" id="input2">
+	</div>
+	<br/>
+	<input type="button" value = "Check" id="btn">
+	</form>
+	<div id="result">&nbsp;</div>
+</body>
+</html>
